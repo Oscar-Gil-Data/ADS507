@@ -11,6 +11,9 @@ orders as (
     select * from {{ ref('stg_orders') }}
     ),
 
+fct_orders as (
+    select * from {{ ref('fct_orders') }}
+),
 customer_orders as (
 
     select
@@ -43,4 +46,13 @@ final as (
 
 )
 
-select * from final
+select final.*
+    ,  lv.lifetime_value
+from final
+join (
+select customer_id
+    ,  sum(amount) as lifetime_value 
+from fct_orders
+group by customer_id
+    ) as lv 
+on final.customer_id = lv.customer_id
