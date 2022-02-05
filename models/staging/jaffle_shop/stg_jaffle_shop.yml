@@ -19,7 +19,7 @@ models:
         - name: status
           tests:
             - name: status
-            description: '{{ doc("order_status")}}'
+          description: '{{ doc("order_status") }}'
           tests:
             - accepted_values:
                 values:
